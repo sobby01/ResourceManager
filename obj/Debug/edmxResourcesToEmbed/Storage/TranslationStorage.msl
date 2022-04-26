@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TranslationStorageModelStoreContainer" CdmEntityContainer="TranslationStorage">
+    <EntitySetMapping Name="Cultures">
+      <EntityTypeMapping TypeName="TranslationStorageModel.Culture">
+        <MappingFragment StoreEntitySet="Cultures">
+          <ScalarProperty Name="CultureID" ColumnName="CultureID" />
+          <ScalarProperty Name="CultureName" ColumnName="CultureName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Translations">
+      <EntityTypeMapping TypeName="TranslationStorageModel.Translation">
+        <MappingFragment StoreEntitySet="Translations">
+          <ScalarProperty Name="TranslationID" ColumnName="TranslationID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TranslationTexts">
+      <EntityTypeMapping TypeName="TranslationStorageModel.TranslationText">
+        <MappingFragment StoreEntitySet="TranslationTexts">
+          <ScalarProperty Name="TranslationTextID" ColumnName="TranslationTextID" />
+          <ScalarProperty Name="TranslationID" ColumnName="TranslationID" />
+          <ScalarProperty Name="CultureID" ColumnName="CultureID" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="FindTranslations" FunctionName="TranslationStorageModel.Store.FindTranslations" />
+    <FunctionImportMapping FunctionImportName="GetCulture" FunctionName="TranslationStorageModel.Store.GetCulture" />
+    <FunctionImportMapping FunctionImportName="SearchTranslation" FunctionName="TranslationStorageModel.Store.SearchTranslation" />
+  </EntityContainerMapping>
+</Mapping>

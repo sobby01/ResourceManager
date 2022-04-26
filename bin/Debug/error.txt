@@ -1,0 +1,352 @@
+2021-07-28 19:37:44,469 [1] ERROR ResourceManager.Client.SetupDatabase [(null)] - Testing of database connection failed. 
+System.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SQL Network Interfaces, error: 50 - Local Database Runtime error occurred. Cannot create an automatic instance. See the Windows Application event log for error details.
+)
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, DbConnectionPool pool, String accessToken, Boolean applyTransientFaultHandling, SqlAuthenticationProviderManager sqlAuthProviderManager)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at System.Data.SqlClient.SqlProviderServices.UsingConnection(SqlConnection sqlConnection, Action`1 act)
+   at System.Data.SqlClient.SqlProviderServices.UsingMasterConnection(SqlConnection sqlConnection, Action`1 act)
+   at System.Data.SqlClient.SqlProviderServices.CheckDatabaseExists(SqlConnection sqlConnection, Nullable`1 commandTimeout, String databaseName)
+   at System.Data.SqlClient.SqlProviderServices.DbDatabaseExists(DbConnection connection, Nullable`1 commandTimeout, StoreItemCollection storeItemCollection)
+   at System.Data.Objects.ObjectContext.DatabaseExists()
+   at ResourceManager.Storage.TranslationStorageManager.DatabaseExists() in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Storage\TranslationStorageManager.cs:line 54
+   at ResourceManager.Client.SetupDatabase.btnTest_Click(Object sender, EventArgs e) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\SetupDatabase.cs:line 53
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:-1983577832,State:0,Class:20
+2021-07-28 22:01:01,539 [1] ERROR ResourceManager.Client.Program [(null)] - Error while executing RESX manager. 
+System.IO.IOException: The process cannot access the file 'C:\Users\admin\Desktop\OnScreenHelper.xlsx' because it is being used by another process.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean useAsync)
+   at MS.Internal.IO.Zip.ZipArchive.OpenOnFile(String path, FileMode mode, FileAccess access, FileShare share, Boolean streaming)
+   at System.IO.Packaging.ZipPackage..ctor(String path, FileMode mode, FileAccess access, FileShare share, Boolean streaming)
+   at System.IO.Packaging.Package.Open(String path, FileMode packageMode, FileAccess packageAccess, FileShare packageShare, Boolean streaming)
+   at DocumentFormat.OpenXml.Packaging.OpenXmlPackage.OpenCore(String path, Boolean readWriteMode)
+   at DocumentFormat.OpenXml.Packaging.SpreadsheetDocument.Open(String path, Boolean isEditable, OpenSettings openSettings)
+   at ClosedXML.Excel.XLWorkbook.LoadSheets(String fileName)
+   at ClosedXML.Excel.XLWorkbook..ctor(String file, XLEventTracking eventTracking)
+   at ResourceManager.Converter.XlsxConverter.Import(String filePath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Converter\XlsxConverter.cs:line 189
+   at ResourceManager.Client.MainForm.openExcelDialog_FileOk(Object sender, CancelEventArgs e) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 240
+   at System.Windows.Forms.FileDialog.OnFileOk(CancelEventArgs e)
+   at System.Windows.Forms.FileDialog.HandleVistaFileOk(IFileDialog dialog)
+2021-07-29 12:27:22,165 [3] ERROR ResourceManager.Client.MainForm [(null)] - Error while processing task.
+System.AggregateException: One or more errors occurred. ---> System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\SourceCode\OnScreenSap\OnScreen\OnScreenWebAPI\bower_components'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetFiles(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetFiles(String searchPattern, SearchOption searchOption)
+   at ResourceManager.Core.VSFileContainer.Init(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSFileContainer.cs:line 22
+   at ResourceManager.Core.VSProjectFolder..ctor(VSProject project, VSFileContainer parent, String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSProjectFolder.cs:line 13
+   at ResourceManager.Core.VSFileContainer.Init(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSFileContainer.cs:line 65
+   at ResourceManager.Core.VSProject..ctor(VSSolution solution, String filepath, String name) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSProject.cs:line 31
+   at ResourceManager.Core.VSSolutionFileParser.RegisterProject(String line) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolutionFileParser.cs:line 40
+   at ResourceManager.Core.VSSolutionFileParser..ctor(String filepath, VSSolution solution) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolutionFileParser.cs:line 28
+   at ResourceManager.Core.VSSolution..ctor(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolution.cs:line 39
+   at ResourceManager.Client.MainForm.openSolution(String filename) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 166
+   at ResourceManager.Client.MainForm.<openSolution>b__13_0() in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 137
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()
+   --- End of inner exception stack trace ---
+---> (Inner Exception #0) System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\SourceCode\OnScreenSap\OnScreen\OnScreenWebAPI\bower_components'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetFiles(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetFiles(String searchPattern, SearchOption searchOption)
+   at ResourceManager.Core.VSFileContainer.Init(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSFileContainer.cs:line 22
+   at ResourceManager.Core.VSProjectFolder..ctor(VSProject project, VSFileContainer parent, String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSProjectFolder.cs:line 13
+   at ResourceManager.Core.VSFileContainer.Init(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSFileContainer.cs:line 65
+   at ResourceManager.Core.VSProject..ctor(VSSolution solution, String filepath, String name) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSProject.cs:line 31
+   at ResourceManager.Core.VSSolutionFileParser.RegisterProject(String line) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolutionFileParser.cs:line 40
+   at ResourceManager.Core.VSSolutionFileParser..ctor(String filepath, VSSolution solution) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolutionFileParser.cs:line 28
+   at ResourceManager.Core.VSSolution..ctor(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolution.cs:line 39
+   at ResourceManager.Client.MainForm.openSolution(String filename) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 166
+   at ResourceManager.Client.MainForm.<openSolution>b__13_0() in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 137
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()<---
+
+2021-07-29 12:30:00,529 [3] ERROR ResourceManager.Client.MainForm [(null)] - Error while processing task.
+System.AggregateException: One or more errors occurred. ---> System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\SourceCode\OnScreenSap\OnScreen\OnScreenWebAPI\bower_components'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetFiles(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetFiles(String searchPattern, SearchOption searchOption)
+   at ResourceManager.Core.VSFileContainer.Init(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSFileContainer.cs:line 22
+   at ResourceManager.Core.VSProjectFolder..ctor(VSProject project, VSFileContainer parent, String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSProjectFolder.cs:line 13
+   at ResourceManager.Core.VSFileContainer.Init(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSFileContainer.cs:line 65
+   at ResourceManager.Core.VSProject..ctor(VSSolution solution, String filepath, String name) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSProject.cs:line 31
+   at ResourceManager.Core.VSSolutionFileParser.RegisterProject(String line) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolutionFileParser.cs:line 40
+   at ResourceManager.Core.VSSolutionFileParser..ctor(String filepath, VSSolution solution) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolutionFileParser.cs:line 28
+   at ResourceManager.Core.VSSolution..ctor(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolution.cs:line 39
+   at ResourceManager.Client.MainForm.openSolution(String filename) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 166
+   at ResourceManager.Client.MainForm.<openSolution>b__13_0() in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 137
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()
+   --- End of inner exception stack trace ---
+---> (Inner Exception #0) System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\SourceCode\OnScreenSap\OnScreen\OnScreenWebAPI\bower_components'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetFiles(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetFiles(String searchPattern, SearchOption searchOption)
+   at ResourceManager.Core.VSFileContainer.Init(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSFileContainer.cs:line 22
+   at ResourceManager.Core.VSProjectFolder..ctor(VSProject project, VSFileContainer parent, String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSProjectFolder.cs:line 13
+   at ResourceManager.Core.VSFileContainer.Init(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSFileContainer.cs:line 65
+   at ResourceManager.Core.VSProject..ctor(VSSolution solution, String filepath, String name) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSProject.cs:line 31
+   at ResourceManager.Core.VSSolutionFileParser.RegisterProject(String line) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolutionFileParser.cs:line 40
+   at ResourceManager.Core.VSSolutionFileParser..ctor(String filepath, VSSolution solution) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolutionFileParser.cs:line 28
+   at ResourceManager.Core.VSSolution..ctor(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolution.cs:line 39
+   at ResourceManager.Client.MainForm.openSolution(String filename) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 166
+   at ResourceManager.Client.MainForm.<openSolution>b__13_0() in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 137
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()<---
+
+2021-07-29 12:31:31,657 [3] ERROR ResourceManager.Client.MainForm [(null)] - Error while processing task.
+System.AggregateException: One or more errors occurred. ---> System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\SourceCode\OnScreenSap\OnScreen\OnScreenWebAPI\bower_components'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetFiles(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetFiles(String searchPattern, SearchOption searchOption)
+   at ResourceManager.Core.VSFileContainer.Init(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSFileContainer.cs:line 22
+   at ResourceManager.Core.VSProjectFolder..ctor(VSProject project, VSFileContainer parent, String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSProjectFolder.cs:line 13
+   at ResourceManager.Core.VSFileContainer.Init(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSFileContainer.cs:line 65
+   at ResourceManager.Core.VSProject..ctor(VSSolution solution, String filepath, String name) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSProject.cs:line 31
+   at ResourceManager.Core.VSSolutionFileParser.RegisterProject(String line) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolutionFileParser.cs:line 40
+   at ResourceManager.Core.VSSolutionFileParser..ctor(String filepath, VSSolution solution) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolutionFileParser.cs:line 28
+   at ResourceManager.Core.VSSolution..ctor(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolution.cs:line 39
+   at ResourceManager.Client.MainForm.openSolution(String filename) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 166
+   at ResourceManager.Client.MainForm.<openSolution>b__13_0() in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 137
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()
+   --- End of inner exception stack trace ---
+---> (Inner Exception #0) System.IO.DirectoryNotFoundException: Could not find a part of the path 'C:\SourceCode\OnScreenSap\OnScreen\OnScreenWebAPI\bower_components'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileSystemEnumerableIterator`1.CommonInit()
+   at System.IO.FileSystemEnumerableIterator`1..ctor(String path, String originalUserPath, String searchPattern, SearchOption searchOption, SearchResultHandler`1 resultHandler, Boolean checkHost)
+   at System.IO.DirectoryInfo.InternalGetFiles(String searchPattern, SearchOption searchOption)
+   at System.IO.DirectoryInfo.GetFiles(String searchPattern, SearchOption searchOption)
+   at ResourceManager.Core.VSFileContainer.Init(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSFileContainer.cs:line 22
+   at ResourceManager.Core.VSProjectFolder..ctor(VSProject project, VSFileContainer parent, String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSProjectFolder.cs:line 13
+   at ResourceManager.Core.VSFileContainer.Init(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSFileContainer.cs:line 65
+   at ResourceManager.Core.VSProject..ctor(VSSolution solution, String filepath, String name) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSProject.cs:line 31
+   at ResourceManager.Core.VSSolutionFileParser.RegisterProject(String line) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolutionFileParser.cs:line 40
+   at ResourceManager.Core.VSSolutionFileParser..ctor(String filepath, VSSolution solution) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolutionFileParser.cs:line 28
+   at ResourceManager.Core.VSSolution..ctor(String filepath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Core\VSSolution.cs:line 39
+   at ResourceManager.Client.MainForm.openSolution(String filename) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 166
+   at ResourceManager.Client.MainForm.<openSolution>b__13_0() in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 137
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()<---
+
+2021-07-29 12:42:20,578 [3] ERROR ResourceManager.Client.MainForm [(null)] - Error while processing task.
+System.AggregateException: One or more errors occurred. ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at ResourceManager.Core.VSProjectFolder.ContainsFiles()
+   at ResourceManager.Core.VSFileContainer.Init(String filepath)
+   at ResourceManager.Core.VSProject..ctor(VSSolution solution, String filepath, String name)
+   at ResourceManager.Core.VSSolutionFileParser.RegisterProject(String line)
+   at ResourceManager.Core.VSSolutionFileParser..ctor(String filepath, VSSolution solution)
+   at ResourceManager.Core.VSSolution..ctor(String filepath)
+   at ResourceManager.Client.MainForm.openSolution(String filename)
+   at ResourceManager.Client.MainForm.<openSolution>b__13_0()
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()
+   --- End of inner exception stack trace ---
+---> (Inner Exception #0) System.NullReferenceException: Object reference not set to an instance of an object.
+   at ResourceManager.Core.VSProjectFolder.ContainsFiles()
+   at ResourceManager.Core.VSFileContainer.Init(String filepath)
+   at ResourceManager.Core.VSProject..ctor(VSSolution solution, String filepath, String name)
+   at ResourceManager.Core.VSSolutionFileParser.RegisterProject(String line)
+   at ResourceManager.Core.VSSolutionFileParser..ctor(String filepath, VSSolution solution)
+   at ResourceManager.Core.VSSolution..ctor(String filepath)
+   at ResourceManager.Client.MainForm.openSolution(String filename)
+   at ResourceManager.Client.MainForm.<openSolution>b__13_0()
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()<---
+
+2021-07-29 12:44:57,459 [3] ERROR ResourceManager.Client.MainForm [(null)] - Error while processing task.
+System.AggregateException: One or more errors occurred. ---> System.NullReferenceException: Object reference not set to an instance of an object.
+   at ResourceManager.Core.VSProjectFolder.ContainsFiles()
+   at ResourceManager.Core.VSFileContainer.Init(String filepath)
+   at ResourceManager.Core.VSProject..ctor(VSSolution solution, String filepath, String name)
+   at ResourceManager.Core.VSSolutionFileParser.RegisterProject(String line)
+   at ResourceManager.Core.VSSolutionFileParser..ctor(String filepath, VSSolution solution)
+   at ResourceManager.Core.VSSolution..ctor(String filepath)
+   at ResourceManager.Client.MainForm.openSolution(String filename)
+   at ResourceManager.Client.MainForm.<openSolution>b__13_0()
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()
+   --- End of inner exception stack trace ---
+---> (Inner Exception #0) System.NullReferenceException: Object reference not set to an instance of an object.
+   at ResourceManager.Core.VSProjectFolder.ContainsFiles()
+   at ResourceManager.Core.VSFileContainer.Init(String filepath)
+   at ResourceManager.Core.VSProject..ctor(VSSolution solution, String filepath, String name)
+   at ResourceManager.Core.VSSolutionFileParser.RegisterProject(String line)
+   at ResourceManager.Core.VSSolutionFileParser..ctor(String filepath, VSSolution solution)
+   at ResourceManager.Core.VSSolution..ctor(String filepath)
+   at ResourceManager.Client.MainForm.openSolution(String filename)
+   at ResourceManager.Client.MainForm.<openSolution>b__13_0()
+   at System.Threading.Tasks.Task.InnerInvoke()
+   at System.Threading.Tasks.Task.Execute()<---
+
+2021-07-29 18:34:33,434 [1] ERROR ResourceManager.Client.Program [(null)] - Error while executing RESX manager. 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at ResourceManager.Client.Controls.ProjectsListView.loadData() in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\Controls\ProjectsListView.cs:line 28
+   at ResourceManager.Client.Controls.ProjectsListView.set_Solution(VSSolution value) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\Controls\ProjectsListView.cs:line 23
+   at ResourceManager.Client.ExcelExport.InitializeComponent() in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\ExcelExport.Designer.cs:line 148
+   at ResourceManager.Client.ExcelExport..ctor() in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\ExcelExport.cs:line 18
+   at ResourceManager.Client.MainForm.exportAll() in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 215
+   at ResourceManager.Client.MainForm.toolExport_Click(Object sender, EventArgs e) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 294
+   at System.Windows.Forms.ToolStripItem.RaiseEvent(Object key, EventArgs e)
+   at System.Windows.Forms.ToolStripButton.OnClick(EventArgs e)
+   at System.Windows.Forms.ToolStripItem.HandleClick(EventArgs e)
+   at System.Windows.Forms.ToolStripItem.HandleMouseUp(MouseEventArgs e)
+   at System.Windows.Forms.ToolStripItem.FireEventInteractive(EventArgs e, ToolStripItemEventType met)
+   at System.Windows.Forms.ToolStripItem.FireEvent(EventArgs e, ToolStripItemEventType met)
+   at System.Windows.Forms.ToolStrip.OnMouseUp(MouseEventArgs mea)
+   at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   at System.Windows.Forms.Control.WndProc(Message& m)
+   at System.Windows.Forms.ScrollableControl.WndProc(Message& m)
+   at System.Windows.Forms.ToolStrip.WndProc(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2021-07-29 22:46:46,098 [1] ERROR ResourceManager.Client.Program [(null)] - Error while executing RESX manager. 
+System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at ResourceManager.Converter.XlsxConverter.ProcessData(IEnumerable`1 data, CultureInfo culture, IXLWorksheet worksheet) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Converter\XlsxConverter.cs:line 158
+   at ResourceManager.Converter.XlsxConverter.AddProjectPerWorksheet(VSProject project, XLWorkbook workbook, IEnumerable`1 cultures, IEnumerable`1 data) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Converter\XlsxConverter.cs:line 120
+   at ResourceManager.Converter.XlsxConverter.Export(String filePath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Converter\XlsxConverter.cs:line 59
+   at ResourceManager.Client.ExcelExport.btnExport_Click(Object sender, EventArgs e) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\ExcelExport.cs:line 138
+   at System.Windows.Forms.Control.OnClick(EventArgs e)
+   at System.Windows.Forms.Button.OnClick(EventArgs e)
+   at System.Windows.Forms.Button.OnMouseUp(MouseEventArgs mevent)
+   at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   at System.Windows.Forms.Control.WndProc(Message& m)
+   at System.Windows.Forms.ButtonBase.WndProc(Message& m)
+   at System.Windows.Forms.Button.WndProc(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2021-08-16 17:45:27,600 [1] ERROR ResourceManager.Client.Program [(null)] - Error while executing RESX manager. 
+DocumentFormat.OpenXml.Packaging.OpenXmlPackageException: The specified package is invalid. The main part is missing.
+   at DocumentFormat.OpenXml.Packaging.OpenXmlPackage.Load()
+   at DocumentFormat.OpenXml.Packaging.OpenXmlPackage.OpenCore(String path, Boolean readWriteMode)
+   at DocumentFormat.OpenXml.Packaging.SpreadsheetDocument.Open(String path, Boolean isEditable, OpenSettings openSettings)
+   at ClosedXML.Excel.XLWorkbook.LoadSheets(String fileName)
+   at ClosedXML.Excel.XLWorkbook..ctor(String file, XLEventTracking eventTracking)
+   at ResourceManager.Converter.XlsxConverter.Import(String filePath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Converter\XlsxConverter.cs:line 297
+   at ResourceManager.Client.MainForm.openExcelDialog_FileOk(Object sender, CancelEventArgs e) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 228
+   at System.Windows.Forms.FileDialog.OnFileOk(CancelEventArgs e)
+   at System.Windows.Forms.FileDialog.HandleVistaFileOk(IFileDialog dialog)
+2021-08-16 17:49:02,641 [1] ERROR ResourceManager.Client.Program [(null)] - Error while executing RESX manager. 
+DocumentFormat.OpenXml.Packaging.OpenXmlPackageException: The specified package is invalid. The main part is missing.
+   at DocumentFormat.OpenXml.Packaging.OpenXmlPackage.Load()
+   at DocumentFormat.OpenXml.Packaging.OpenXmlPackage.OpenCore(String path, Boolean readWriteMode)
+   at DocumentFormat.OpenXml.Packaging.SpreadsheetDocument.Open(String path, Boolean isEditable, OpenSettings openSettings)
+   at ClosedXML.Excel.XLWorkbook.LoadSheets(String fileName)
+   at ClosedXML.Excel.XLWorkbook..ctor(String file, XLEventTracking eventTracking)
+   at ResourceManager.Converter.XlsxConverter.Import(String filePath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Converter\XlsxConverter.cs:line 297
+   at ResourceManager.Client.MainForm.openExcelDialog_FileOk(Object sender, CancelEventArgs e) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 228
+   at System.Windows.Forms.FileDialog.OnFileOk(CancelEventArgs e)
+   at System.Windows.Forms.FileDialog.HandleVistaFileOk(IFileDialog dialog)
+2021-08-16 17:49:19,391 [1] ERROR ResourceManager.Client.Program [(null)] - Error while executing RESX manager. 
+DocumentFormat.OpenXml.Packaging.OpenXmlPackageException: The specified package is invalid. The main part is missing.
+   at DocumentFormat.OpenXml.Packaging.OpenXmlPackage.Load()
+   at DocumentFormat.OpenXml.Packaging.OpenXmlPackage.OpenCore(String path, Boolean readWriteMode)
+   at DocumentFormat.OpenXml.Packaging.SpreadsheetDocument.Open(String path, Boolean isEditable, OpenSettings openSettings)
+   at ClosedXML.Excel.XLWorkbook.LoadSheets(String fileName)
+   at ClosedXML.Excel.XLWorkbook..ctor(String file, XLEventTracking eventTracking)
+   at ResourceManager.Converter.XlsxConverter.Import(String filePath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Converter\XlsxConverter.cs:line 297
+   at ResourceManager.Client.MainForm.openExcelDialog_FileOk(Object sender, CancelEventArgs e) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 228
+   at System.Windows.Forms.FileDialog.OnFileOk(CancelEventArgs e)
+   at System.Windows.Forms.FileDialog.HandleVistaFileOk(IFileDialog dialog)
+2021-08-16 18:00:37,831 [1] ERROR ResourceManager.Client.Program [(null)] - Error while executing RESX manager. 
+DocumentFormat.OpenXml.Packaging.OpenXmlPackageException: The specified package is invalid. The main part is missing.
+   at DocumentFormat.OpenXml.Packaging.OpenXmlPackage.Load()
+   at DocumentFormat.OpenXml.Packaging.OpenXmlPackage.OpenCore(String path, Boolean readWriteMode)
+   at DocumentFormat.OpenXml.Packaging.SpreadsheetDocument.Open(String path, Boolean isEditable, OpenSettings openSettings)
+   at ClosedXML.Excel.XLWorkbook.LoadSheets(String fileName)
+   at ClosedXML.Excel.XLWorkbook..ctor(String file, XLEventTracking eventTracking)
+   at ResourceManager.Converter.XlsxConverter.Import(String filePath) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Converter\XlsxConverter.cs:line 297
+   at ResourceManager.Client.MainForm.openExcelDialog_FileOk(Object sender, CancelEventArgs e) in C:\Users\admin\Downloads\resxmanager-master\ResxClient\Client\MainForm.cs:line 228
+   at System.Windows.Forms.FileDialog.OnFileOk(CancelEventArgs e)
+   at System.Windows.Forms.FileDialog.HandleVistaFileOk(IFileDialog dialog)
+2022-04-25 18:31:38,393 [1] ERROR ResourceManager.Client.Program [(null)] - Error while executing RESX manager. 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at ResourceManager.Client.Controls.ProjectsListView.loadData() in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\Controls\ProjectsListView.cs:line 28
+   at ResourceManager.Client.Controls.ProjectsListView.set_Solution(VSSolution value) in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\Controls\ProjectsListView.cs:line 23
+   at ResourceManager.Client.ExcelExport.InitializeComponent() in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\ExcelExport.Designer.cs:line 160
+   at ResourceManager.Client.ExcelExport..ctor() in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\ExcelExport.cs:line 18
+   at ResourceManager.Client.MainForm.exportAll() in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\MainForm.cs:line 215
+   at ResourceManager.Client.MainForm.toolExport_Click(Object sender, EventArgs e) in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\MainForm.cs:line 294
+   at System.Windows.Forms.ToolStripItem.RaiseEvent(Object key, EventArgs e)
+   at System.Windows.Forms.ToolStripButton.OnClick(EventArgs e)
+   at System.Windows.Forms.ToolStripItem.HandleClick(EventArgs e)
+   at System.Windows.Forms.ToolStripItem.HandleMouseUp(MouseEventArgs e)
+   at System.Windows.Forms.ToolStripItem.FireEventInteractive(EventArgs e, ToolStripItemEventType met)
+   at System.Windows.Forms.ToolStripItem.FireEvent(EventArgs e, ToolStripItemEventType met)
+   at System.Windows.Forms.ToolStrip.OnMouseUp(MouseEventArgs mea)
+   at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   at System.Windows.Forms.Control.WndProc(Message& m)
+   at System.Windows.Forms.ScrollableControl.WndProc(Message& m)
+   at System.Windows.Forms.ToolStrip.WndProc(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2022-04-25 18:31:58,185 [1] ERROR ResourceManager.Client.Program [(null)] - Error while executing RESX manager. 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at ResourceManager.Client.Controls.ProjectsListView.loadData() in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\Controls\ProjectsListView.cs:line 28
+   at ResourceManager.Client.Controls.ProjectsListView.set_Solution(VSSolution value) in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\Controls\ProjectsListView.cs:line 23
+   at ResourceManager.Client.ExcelExport.InitializeComponent() in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\ExcelExport.Designer.cs:line 160
+   at ResourceManager.Client.ExcelExport..ctor() in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\ExcelExport.cs:line 18
+   at ResourceManager.Client.MainForm.exportAll() in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\MainForm.cs:line 215
+   at ResourceManager.Client.MainForm.toolExport_Click(Object sender, EventArgs e) in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\MainForm.cs:line 294
+   at System.Windows.Forms.ToolStripItem.RaiseEvent(Object key, EventArgs e)
+   at System.Windows.Forms.ToolStripButton.OnClick(EventArgs e)
+   at System.Windows.Forms.ToolStripItem.HandleClick(EventArgs e)
+   at System.Windows.Forms.ToolStripItem.HandleMouseUp(MouseEventArgs e)
+   at System.Windows.Forms.ToolStripItem.FireEventInteractive(EventArgs e, ToolStripItemEventType met)
+   at System.Windows.Forms.ToolStripItem.FireEvent(EventArgs e, ToolStripItemEventType met)
+   at System.Windows.Forms.ToolStrip.OnMouseUp(MouseEventArgs mea)
+   at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   at System.Windows.Forms.Control.WndProc(Message& m)
+   at System.Windows.Forms.ScrollableControl.WndProc(Message& m)
+   at System.Windows.Forms.ToolStrip.WndProc(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+2022-04-25 18:33:44,377 [1] ERROR ResourceManager.Client.Program [(null)] - Error while executing RESX manager. 
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at ResourceManager.Client.Controls.ProjectsListView.loadData() in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\Controls\ProjectsListView.cs:line 28
+   at ResourceManager.Client.Controls.ProjectsListView.set_Solution(VSSolution value) in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\Controls\ProjectsListView.cs:line 23
+   at ResourceManager.Client.ExcelExport.InitializeComponent() in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\ExcelExport.Designer.cs:line 160
+   at ResourceManager.Client.ExcelExport..ctor() in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\ExcelExport.cs:line 18
+   at ResourceManager.Client.MainForm.exportAll() in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\MainForm.cs:line 215
+   at ResourceManager.Client.MainForm.toolExport_Click(Object sender, EventArgs e) in C:\SourceCode_NewDevOps\Translations\resxmanager-master\ResxClient\Client\MainForm.cs:line 294
+   at System.Windows.Forms.ToolStripItem.RaiseEvent(Object key, EventArgs e)
+   at System.Windows.Forms.ToolStripButton.OnClick(EventArgs e)
+   at System.Windows.Forms.ToolStripItem.HandleClick(EventArgs e)
+   at System.Windows.Forms.ToolStripItem.HandleMouseUp(MouseEventArgs e)
+   at System.Windows.Forms.ToolStripItem.FireEventInteractive(EventArgs e, ToolStripItemEventType met)
+   at System.Windows.Forms.ToolStripItem.FireEvent(EventArgs e, ToolStripItemEventType met)
+   at System.Windows.Forms.ToolStrip.OnMouseUp(MouseEventArgs mea)
+   at System.Windows.Forms.Control.WmMouseUp(Message& m, MouseButtons button, Int32 clicks)
+   at System.Windows.Forms.Control.WndProc(Message& m)
+   at System.Windows.Forms.ScrollableControl.WndProc(Message& m)
+   at System.Windows.Forms.ToolStrip.WndProc(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.OnMessage(Message& m)
+   at System.Windows.Forms.Control.ControlNativeWindow.WndProc(Message& m)
+   at System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)

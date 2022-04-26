@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TranslationStorageModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="TranslationStorage" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cultures" EntityType="TranslationStorageModel.Culture" />
+    <EntitySet Name="Translations" EntityType="TranslationStorageModel.Translation" />
+    <EntitySet Name="TranslationTexts" EntityType="TranslationStorageModel.TranslationText" />
+    <AssociationSet Name="FK_TranslationTexts_Cultures" Association="TranslationStorageModel.FK_TranslationTexts_Cultures">
+      <End Role="Cultures" EntitySet="Cultures" />
+      <End Role="TranslationTexts" EntitySet="TranslationTexts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TranslationTexts_Translations" Association="TranslationStorageModel.FK_TranslationTexts_Translations">
+      <End Role="Translations" EntitySet="Translations" />
+      <End Role="TranslationTexts" EntitySet="TranslationTexts" />
+    </AssociationSet>
+    <FunctionImport Name="FindTranslations" EntitySet="TranslationTexts" ReturnType="Collection(TranslationStorageModel.TranslationText)">
+      <Parameter Name="text" Mode="In" Type="String" />
+      <Parameter Name="culture" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetCulture" EntitySet="Cultures" ReturnType="Collection(TranslationStorageModel.Culture)">
+      <Parameter Name="culture" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="SearchTranslation" EntitySet="TranslationTexts" ReturnType="Collection(TranslationStorageModel.TranslationText)">
+      <Parameter Name="text" Mode="In" Type="String" />
+      <Parameter Name="srcculture" Mode="In" Type="String" />
+      <Parameter Name="tgtculture" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="Culture">
+    <Key>
+      <PropertyRef Name="CultureID" />
+    </Key>
+    <Property Name="CultureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CultureName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Translation">
+    <Key>
+      <PropertyRef Name="TranslationID" />
+    </Key>
+    <Property Name="TranslationID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Translations" Relationship="TranslationStorageModel.FK_TranslationTexts_Translations" FromRole="Translations" ToRole="TranslationTexts" />
+  </EntityType>
+  <EntityType Name="TranslationText">
+    <Key>
+      <PropertyRef Name="TranslationTextID" />
+    </Key>
+    <Property Name="TranslationTextID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TranslationID" Type="Int64" Nullable="false" />
+    <Property Name="CultureID" Type="Int32" Nullable="false" />
+    <Property Name="Text" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Culture" Relationship="TranslationStorageModel.FK_TranslationTexts_Cultures" FromRole="TranslationTexts" ToRole="Cultures" />
+    <NavigationProperty Name="Translation" Relationship="TranslationStorageModel.FK_TranslationTexts_Translations" FromRole="TranslationTexts" ToRole="Translations" />
+  </EntityType>
+  <Association Name="FK_TranslationTexts_Cultures">
+    <End Role="Cultures" Type="TranslationStorageModel.Culture" Multiplicity="1" />
+    <End Role="TranslationTexts" Type="TranslationStorageModel.TranslationText" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cultures">
+        <PropertyRef Name="CultureID" />
+      </Principal>
+      <Dependent Role="TranslationTexts">
+        <PropertyRef Name="CultureID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TranslationTexts_Translations">
+    <End Role="Translations" Type="TranslationStorageModel.Translation" Multiplicity="1" />
+    <End Role="TranslationTexts" Type="TranslationStorageModel.TranslationText" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Translations">
+        <PropertyRef Name="TranslationID" />
+      </Principal>
+      <Dependent Role="TranslationTexts">
+        <PropertyRef Name="TranslationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

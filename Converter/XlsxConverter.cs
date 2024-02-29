@@ -9,6 +9,8 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using ResourceManager.Exceptions;
 using ResourceManager.Core;
+using ResourceManager.Storage;
+using System.Text.RegularExpressions;
 
 namespace ResourceManager.Converter
 {
@@ -56,7 +58,8 @@ namespace ResourceManager.Converter
 
                     if (IncludeProjectsWithoutTranslations || data.Count() > 0)
                     {
-                        AddProjectPerWorksheet(project, workbook, cultures, data);
+                        AddProjectInSingleWorksheet(project, workbook, cultures, data);
+                        //AddProjectPerWorksheet(project, workbook, cultures, data);
                     }
                     //AddProject(project, workbook, cultures, data);
                 }
@@ -90,6 +93,143 @@ namespace ResourceManager.Converter
             }
 
             return data;
+        }
+
+        private void AddProjectInSingleWorksheet(VSProject project, XLWorkbook workbook, IEnumerable<CultureInfo> cultures, IEnumerable<ResourceDataGroupBase> data)
+        {
+
+            var culturesList = cultures.ToList();
+            List<IXLWorksheet> xlWorkSheets = new List<IXLWorksheet>();
+            string cultureName = culturesList[0].Name;
+            string workSheetName = project.ShortName;
+            CultureInfo defaultCulture = new CultureInfo("en-US");
+            //int totalRows = data.Where(x => x.ResxData.ContainsKey(culture) &&
+            //x.ResxData[culture].Comment != null &&
+            //x.ResxData[culture].Comment.ToUpperInvariant() == "pending".ToUpperInvariant()).Count();
+
+            int totalRows = data.Where(x => x.ResxData.ContainsKey(defaultCulture)).Count();
+            if (totalRows <= 0) return;
+            int c = 3;
+            var worksheet = workbook.Worksheets.Add(workSheetName);
+            worksheet.Style.NumberFormat.SetNumberFormatId(49); // Format: Text
+
+            worksheet.Cell(1, 1).Value = project.Name;
+            worksheet.Cell(1, 2).Value = "Keys";
+
+            worksheet.Column(c).Width = ColumnValueWidth;
+            worksheet.Column(c).Style.Alignment.SetWrapText(true);
+            worksheet.Row(1).Style.Font.SetBold(true);
+            worksheet.Columns(1, 2).Style.Font.SetFontColor(XLColor.Gray);
+            worksheet.Columns(1, 2).Width = 12.0;
+
+            worksheet.Style.Alignment.SetVertical(XLAlignmentVerticalValues.Top);
+            worksheet.Cell(1, c).Value = "en-US";
+
+            c++;
+            foreach (var culture in culturesList)
+            {
+                if (culture.Name == "en-US") continue;
+
+                worksheet.Cell(1, c).Value = culture.Name;
+                c++;
+            }
+            ProcessDataInSingleSheet(data, culturesList, worksheet);
+        }
+
+        private void ProcessDataInSingleSheet(IEnumerable<ResourceDataGroupBase> data, List<CultureInfo> culturesList, IXLWorksheet worksheet)
+        {
+            try
+            {
+                CultureInfo defaultCulture = new CultureInfo("en-US");
+                int rowIndex = 2;
+                int totalIndexers = 0;
+                int c = 3;
+                foreach (ResourceDataGroupBase dataGroup in data)
+                {
+                    if (!dataGroup.ResxData.ContainsKey(defaultCulture))
+                    {
+                        continue;
+                    }
+                    totalIndexers++;
+                    c = 3;
+                    var cell = worksheet.Cell(rowIndex, c);
+                    bool pendingFound = false;
+
+                    foreach (var culture in culturesList)
+                    {
+                        if (culture == null || culture.Name == "en-US")
+                        {
+                            continue;
+                        }
+
+                        if (dataGroup.ResxData.ContainsKey(culture))
+                        {
+                            string comment = dataGroup.ResxData[culture].Comment;
+                            string defaultValue = dataGroup.ResxData[defaultCulture].Value;
+                            // Check if the comment is "pending" or if the value is empty
+                            if (string.Equals(comment, "pending", StringComparison.OrdinalIgnoreCase) ||
+                                string.IsNullOrWhiteSpace(dataGroup.ResxData[culture].Value) ||
+                                string.Equals(dataGroup.ResxData[defaultCulture].Value, dataGroup.ResxData[culture].Value))
+                            {
+                                pendingFound = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (pendingFound)
+                    {
+                        // Write information to the Excel worksheet only once
+                        worksheet.Cell(rowIndex, 1).Value = dataGroup.FileGroup.ID;
+                        worksheet.Cell(rowIndex, 2).Value = dataGroup.Name;
+                        var dataToWriteIncell = worksheet.Cell(rowIndex, c);
+                        dataToWriteIncell.DataType = XLCellValues.Text;
+                        dataToWriteIncell.Value = dataGroup.ResxData[new CultureInfo("en-US")].Value;
+                        dataToWriteIncell.DataType = XLCellValues.Text;
+
+                        c++;
+                        foreach (var culture in culturesList)
+                        {
+                            try
+                            {
+                                if (culture == null || culture.Name == "en-US")
+                                {
+                                    continue;
+                                }
+                                string comment = dataGroup.ResxData[culture].Comment;
+                                dataToWriteIncell = worksheet.Cell(rowIndex, c);
+                                dataToWriteIncell.DataType = XLCellValues.Text;
+                                // Check if the comment is "pending" or if the value is empty
+                                if (string.Equals(comment, "done", StringComparison.OrdinalIgnoreCase) ||
+                                    !string.Equals(dataGroup.ResxData[defaultCulture].Value, dataGroup.ResxData[culture].Value))
+                                {
+                                    dataToWriteIncell.Value = dataGroup.ResxData[culture].Value;
+                                }
+                                else
+                                {
+                                    dataToWriteIncell.Value = "";
+                                }
+                                dataToWriteIncell.DataType = XLCellValues.Text; // Set datatype after value is assigned
+                                c++;
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+                        }
+                        rowIndex++;
+                    }
+                    else
+                    {
+                        continue;// do not need to include the row.
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+            
         }
 
         private void AddProjectPerWorksheet(VSProject project, XLWorkbook workbook, IEnumerable<CultureInfo> cultures, IEnumerable<ResourceDataGroupBase> data)
@@ -455,7 +595,7 @@ namespace ResourceManager.Converter
                 }
                 else if (cultureString.ToUpperInvariant().Contains("zh".ToUpperInvariant()))
                 {
-                    return new CultureInfo("zh-ZH");
+                    return new CultureInfo("zh-CN");
                 }
                 else if (cultureString.ToUpperInvariant().Contains("tr".ToUpperInvariant()))
                 {
@@ -472,6 +612,10 @@ namespace ResourceManager.Converter
                 else if (cultureString.ToUpperInvariant().Contains("th".ToUpperInvariant()))
                 {
                     return new CultureInfo("th-TH");
+                }
+                else if (cultureString.ToUpperInvariant().Contains("fr".ToUpperInvariant()))
+                {
+                    return new CultureInfo("fr-FR");
                 }
                 else
                 {

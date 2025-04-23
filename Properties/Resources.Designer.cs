@@ -97,7 +97,7 @@ namespace ResourceManager.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OnScree Resource Manager.
+        ///   Looks up a localized string similar to OnScreen Resource Manager.
         /// </summary>
         internal static string ClientTitle {
             get {
